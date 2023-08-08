@@ -21,15 +21,13 @@ export class AuthService {
         if(user == null){
             throw new BadRequestException(MessagesHelper.AUTH_PASSWORD_OR_LOGIN_NOT_FOUND);
         }
-    
-        return dto;
 
         const tokenPayload = {email : user.email, sub: user._id};
 
         return {
             email : user.email,
             name : user.name,
-            token : this.jwtService.sign(tokenPayload, {secret: process.env.USER_JWT_SECRET_KEY})
+            token : this.jwtService.sign(tokenPayload, {secret: process.env.JWT_SECRET_KEY})
         }
     }
 

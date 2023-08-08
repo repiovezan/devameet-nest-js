@@ -11,8 +11,9 @@ import { APP_GUARD } from '@nestjs/core'
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.DATABASE_URL),
+    UserModule,
     AuthModule,
-    UserModule],
+    ],
   controllers: [],
   providers: [
     {provide : APP_GUARD, useClass: JwtAuthGuard}

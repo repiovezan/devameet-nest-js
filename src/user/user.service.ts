@@ -36,12 +36,16 @@ export class UserService{
             const bytes = CryptoJS.AES.decrypt(user.password, process.env.USER_CYPHER_SECRET_KEY);
             const savedPassword = bytes.toString(CryptoJS.enc.Utf8);
 
-            if(password == savedPassword){
-                return user
+            if(password === savedPassword){
+                return user;    
             }
         }
 
         return null;
+    }
+
+    async getUserById(id: string){
+        return this.userModel.findById(id);
     }
 
 }
