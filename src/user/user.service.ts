@@ -5,6 +5,7 @@ import { RegisterDto } from './dtos/register.dto'
 import { User, UserDocument} from "../user/schemas/user.schemas"
 import * as CryptoJS from 'crypto-js';
 import { promises } from "dns";
+import { UpdateUserDto } from "src/auth/dtos/updateuser.dto";
 
 
 
@@ -46,6 +47,11 @@ export class UserService{
 
     async getUserById(id: string){
         return this.userModel.findById(id);
+    }
+
+
+    async updateUser(id: string, dto: UpdateUserDto){
+        return await this.userModel.findByIdAndUpdate(id, dto)
     }
 
 }
