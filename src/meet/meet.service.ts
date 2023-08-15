@@ -1,7 +1,6 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose'; 
-import { UserDocument } from 'src/user/schemas/user.schemas';
 import { Meet, MeetDocument } from './schemas/meet.schema';
 import { UserService } from 'src/user/user.service';
 import { CreateMeetDto } from './dtos/createmeet.dto';
@@ -59,7 +58,7 @@ export class MeetService {
         const meet = await this.model.findOne({user, _id: meetId});
 
         if(!meet){
-            throw new BadRequestException(MeetMessagesHelper.UPDADE_MEET_NOT_FOUND);
+            throw new BadRequestException(MeetMessagesHelper.UPDATE_MEET_NOT_FOUND);
         }
 
         meet.name = dto.name;

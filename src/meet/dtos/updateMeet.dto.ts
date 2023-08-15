@@ -12,29 +12,29 @@ import {
     import { CreateMeetDto } from './createmeet.dto'; 
     
     export class UpdateMeetDto extends CreateMeetDto { 
-    @IsArray({ message: MeetMessagesHelper.UPDATE_OBEJCTNAME_NOT_FOUND }) 
+    @IsArray({ message: MeetMessagesHelper.UPDATE_OBJECT_NAME_NOT_VALID}) 
     @Type(() => UpdateMeetObject) 
     @ValidateNested({ each: true }) 
     objects: Array<UpdateMeetObject> 
     } 
     
     export class UpdateMeetObject { 
-    @IsNotEmpty({ message: MeetMessagesHelper.UPDATE_OBEJCTNAME_NOT_FOUND }) 
+    @IsNotEmpty({ message: MeetMessagesHelper.UPDATE_OBJECT_NAME_NOT_VALID}) 
     name: string; 
     
-    @IsNumber({}, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION }) 
-    @Min(0, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION }) 
-    @Max(8, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION }) 
+    @IsNumber({}, { message: MeetMessagesHelper.UPDATE_XY_NOT_VALID}) 
+    @Min(0, { message: MeetMessagesHelper.UPDATE_XY_NOT_VALID}) 
+    @Max(8, { message: MeetMessagesHelper.UPDATE_XY_NOT_VALID}) 
     x: number; 
     
-    @IsNumber({}, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION }) 
-    @Min(0, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION }) 
-    @Max(8, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION }) 
+    @IsNumber({}, { message: MeetMessagesHelper.UPDATE_XY_NOT_VALID}) 
+    @Min(0, { message: MeetMessagesHelper.UPDATE_XY_NOT_VALID}) 
+    @Max(8, { message: MeetMessagesHelper.UPDATE_XY_NOT_VALID}) 
     y: number; 
     
-    @IsNumber({}, { message: MeetMessagesHelper.UPDATE_ZINDEX_VALIDATION }) 
+    @IsNumber({}, { message: MeetMessagesHelper.UPDATE_ZINDEX_NOT_VALID}) 
     zindex: number; 
     
-    @IsString({ message: MeetMessagesHelper.UPDATE_ZINDEX_VALIDATION }) 
+    @IsString({ message: MeetMessagesHelper.UPDATE_ZINDEX_NOT_VALID}) 
     orientation: string; 
     }
