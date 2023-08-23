@@ -10,6 +10,9 @@ type ActiveSocketType = {
   room: String;
   id: string;
   userId: string;
+  x: number;
+  y: number;
+
 }
 
 @WebSocketGateway({ cors: true })
@@ -46,34 +49,54 @@ export class RoomGateway implements OnGatewayInit, OnGatewayDisconnect {
   @SubscribeMessage('join')
   async handleJoin(client: Socket, payload: JoinRoomDto) {
     const { link, userId } = payload;
-
+  
     const existingOnSocket = this.activeSockets.find(
-      socket => socket.room === link && socket.id === client.id);
-
+      socket => socket.room === link && socket.userId === userId
+    );
+  
+    let dto: UpdateUserPositionDto;
+  
     if (!existingOnSocket) {
-      this.activeSockets.push({ room: link, id: client.id, userId });
-
-      const dto = {
+      // User is not already connected, create a new socket client
+      this.activeSockets.push({
+        room: link,
+        id: client.id,
+        userId,
+        x: Math.floor(Math.random() * 8) + 1, // Generate random x position
+        y: Math.floor(Math.random() * 8) + 1, // Generate random y position
+      });
+  
+      dto = {
         link,
         userId,
-        x: 1,
-        y: 1,
-        orientation: 'front'
-      } as UpdateUserPositionDto
-
-      await this.service.updateUserPosition(client.id, dto);
-
+        x: Math.floor(Math.random() * 8) + 1, // Generate random x position
+        y: Math.floor(Math.random() * 8) + 1, // Generate random y position
+        orientation: 'front',
+      };
+    } else {
+      // User is already connected, load their last position
+      dto = {
+        link,
+        userId,
+        x: existingOnSocket.x,
+        y: existingOnSocket.y,
+        orientation: 'front',
+      };
+      existingOnSocket.id = client.id; // Update the client ID of the existing socket
     }
-
+  
+    await this.service.updateUserPosition(client.id, dto);
+  
     const users = await this.service.listUsersPositionByLink(link);
     this.wss.emit(`${link}-update-user-list`, { users });
-
+  
     if (!existingOnSocket) {
       client.broadcast.emit(`${link}-add-user`, { user: client.id });
     }
-
+  
     this.logger.debug(`Socket client: ${client.id} start to join room ${link}`);
   }
+  
 
   @SubscribeMessage('move')
   async handleMove(client: Socket, payload: UpdateUserPositionDto) {

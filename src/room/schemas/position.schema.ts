@@ -23,13 +23,13 @@ export class Position {
     @Prop({required: true})
     clientId: string;
 
-    @Prop({required: true})
+    @Prop({type:mongoose.Schema.Types.Number, required : true})
     x:number;
 
-    @Prop({required: true})
+    @Prop({type:mongoose.Schema.Types.Number, required : true})
     y:number;
 
-    @Prop({required: true})
+    @Prop({type:mongoose.Schema.Types.String, required : true})
     orientation: string;
 
     @Prop({default: false})
