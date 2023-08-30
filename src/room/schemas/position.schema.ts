@@ -32,8 +32,11 @@ export class Position {
     @Prop({type:mongoose.Schema.Types.String, required : true})
     orientation: string;
 
-    @Prop({default: false})
-    muted:boolean;
-}
-
-export const PositionSchema = SchemaFactory.createForClass(Position);
+    @Prop({ default: false })
+    muted: boolean;
+  
+    @Prop({ default: false })
+    inRoom: boolean;
+  }
+  
+  export const PositionSchema = SchemaFactory.createForClass(Position);
